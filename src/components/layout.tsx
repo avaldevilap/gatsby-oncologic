@@ -2,16 +2,16 @@ import { graphql, Link, StaticQuery } from "gatsby";
 import * as React from "react";
 
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import {
+  createStyles,
   Theme,
   withStyles,
-  WithStyles,
-  createStyles
+  WithStyles
 } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 
 const styles = (theme: Theme) =>
   createStyles({
