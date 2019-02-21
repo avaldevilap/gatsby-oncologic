@@ -1,0 +1,4 @@
+fragment Morphology on icd_o_morphology {
+  code
+  description
+}

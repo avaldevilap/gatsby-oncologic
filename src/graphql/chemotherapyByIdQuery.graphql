@@ -1,0 +1,5 @@
+query chemotherapyByIdQuery($id: Int!) {
+  chemotherapy: chemotherapies_chemotherapy_by_pk(id: $id) {
+    id
+  }
+}

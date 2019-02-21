@@ -1,0 +1,13 @@
+query neoplasmByIdQuery($id: Int!) {
+  neoplasm: subjects_descriptionofthisneoplasm_by_pk(id: $id) {
+    id
+    topography: icdOTopographyByprimarySiteId {
+      code
+      description
+    }
+    morphology: icdOMorphologyByhistologicTypeId {
+      code
+      description
+    }
+  }
+}

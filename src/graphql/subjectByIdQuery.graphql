@@ -1,0 +1,44 @@
+#import "./topographyFragment.graphql"
+#import "./morphologyFragment.graphql"
+
+query subjectByIdQuery($id: Int!) {
+  subject: subjects_subject_by_pk(id: $id) {
+    id
+    ic
+    first_name
+    last_name
+    medical_record
+    gender
+    race: subjectsRaceByraceLinkId {
+      name
+    }
+    date_of_birth
+    address
+    municipality: subjectsMunicipalityBymunicipalityId {
+      name
+      county: subjectsCountyBycountyId {
+        name
+      }
+    }
+    neoplasms: subjectsDescriptionofthisneoplasmsBysubjectId {
+      id
+      topography: icdOTopographyByprimarySiteId {
+        ...Topography
+      }
+      morphology: icdOMorphologyByhistologicTypeId {
+        ...Morphology
+      }
+    }
+    chemotherapies: chemotherapiesChemotherapysBysubjectId {
+      id
+      protocol: chemotherapiesProtocolByprotocolId {
+        name
+      }
+      date
+    }
+    surgeries: surgeriesSurgerysBysubjectId {
+      id
+      date
+    }
+  }
+}
