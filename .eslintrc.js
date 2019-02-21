@@ -1,23 +1,23 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   env: {
     browser: true,
     es6: true,
-    node: true,
+    node: true
   },
   //   extends: 'airbnb',
-  extends: ['plugin:@typescript-eslint/recommended', 'react-app'],
+  extends: ["react-app"],
   globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
+    Atomics: "readonly",
+    SharedArrayBuffer: "readonly"
   },
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 2018,
-    sourceType: 'module',
+    sourceType: "module"
   },
-  plugins: ['@typescript-eslint', 'react'],
-  rules: {},
+  plugins: ["@typescript-eslint", "react"],
+  rules: {}
 };
