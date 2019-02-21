@@ -9,5 +9,14 @@ query neoplasmByIdQuery($id: Int!) {
       code
       description
     }
+    date_of_diagnosis
+    laterality
+    diagnostic_confirmation
+    differentiation_grade
+    clinical_extension
+    clinical_stage
+    source_of_info
+    date_of_report
+    medic_that_report
   }
 }

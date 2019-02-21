@@ -50,7 +50,7 @@ export default function PatientDetail(props: Props) {
 
         return (
           <>
-            <Grid item xs={12} style={{ paddingTop: 10 }}>
+            <Grid item xs={12}>
               <FullName
                 firstName={first_name}
                 lastName={last_name}
