@@ -1,16 +1,16 @@
 const path = require("path");
-const fetch = require("node-fetch");
-const { createHttpLink } = require("apollo-link-http");
 require("dotenv").config();
 
 module.exports = {
   siteMetadata: {
     title: "Oncologic",
-    titleTemplate: "%s | Oncologic"
+    titleTemplate: "%s | Oncologic",
+    description: require("./package.json").description,
+    url: "https://oncologic.hlg.sld.cu",
+    twitterUsername: "@OncoHolguin"
   },
   plugins: [
     `gatsby-plugin-typescript`,
-    // `gatsby-plugin-eslint`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-offline`,
     `gatsby-plugin-styled-components`,
@@ -28,15 +28,6 @@ module.exports = {
       }
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-nprogress`,
-      options: {
-        // Setting a color is optional.
-        color: `tomato`,
-        // Disable the loading spinner.
-        showSpinner: false
-      }
-    }
+    `gatsby-plugin-sharp`
   ]
 };
