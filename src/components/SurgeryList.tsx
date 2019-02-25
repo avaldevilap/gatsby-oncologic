@@ -17,7 +17,7 @@ export default function SurgeryList(props: any) {
           <ListItem key={index} button divider>
             <ListItemText
               // primary={protocol.name}
-              secondary={<Date date={date} />}
+              secondary={<Date value={date} />}
             />
           </ListItem>
         ))}

@@ -1,23 +1,35 @@
 import * as React from "react";
 import { Query } from "react-apollo";
 
-import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core";
+import {
+  createStyles,
+  Theme,
+  WithStyles,
+  withStyles,
+  Card,
+  CardHeader,
+  CardContent
+} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Tab from "@material-ui/core/Tab";
-import Tabs from "@material-ui/core/Tabs";
 import Typography from "@material-ui/core/Typography";
 
+import Date from "../components/UI/Date";
+import FullName from "../components/UI/FullName";
+import { chemotherapyByIdQuery_chemotherapy } from "../graphql/__generated__/chemotherapyByIdQuery";
 import chemotherapyByIdQuery from "../graphql/chemotherapyByIdQuery.graphql";
+import ChemotherapySessionList from "./ChemotherapySessionList";
+import Pluralize from "react-pluralize";
+import Weight from "./UI/Weight";
+import Height from "./UI/Height";
 
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
-      backgroundColor: theme.palette.background.paper
+      paddingLeft: theme.spacing.unit,
+      paddingRight: theme.spacing.unit
     },
     paper: {
-      height: "85vh",
+      // height: "85vh",
       width: "100%"
     },
     paperContent: {
@@ -36,7 +48,7 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function ChemotherapyDetail(props: Props) {
-  const { id } = props;
+  const { id, classes } = props;
   return (
     <Query query={chemotherapyByIdQuery} variables={{ id }}>
       {({ loading, error, data }) => {
@@ -46,9 +58,84 @@ function ChemotherapyDetail(props: Props) {
         if (error) {
           return `Error! ${error.message}`;
         }
-        const { id } = data.chemotherapy;
+        const {
+          id,
+          protocol,
+          date,
+          current_weight,
+          current_size,
+          current_body_surface,
+          cycles,
+          prescribes,
+          sessions
+        }: chemotherapyByIdQuery_chemotherapy = data.chemotherapy;
 
-        return <div>{id}</div>;
+        return (
+          <Card>
+            <CardHeader
+              title={protocol.name}
+              subheader={<Date value={date} color="inherit" />}
+            />
+            <CardContent style={{ overflowY: "auto" }}>
+              <Grid container spacing={16}>
+                <Grid item xs>
+                  <Typography>
+                    <strong>Peso</strong>
+                  </Typography>
+                  <Weight value={current_weight} />
+                </Grid>
+
+                <Grid item xs>
+                  <Typography>
+                    <strong>Talla</strong>
+                  </Typography>
+                  <Height value={current_size} />
+                </Grid>
+
+                <Grid item xs>
+                  <Typography>
+                    <strong>
+                      <abbr title="Superficie Corporal">SC</abbr>
+                    </strong>
+                  </Typography>
+                  <Weight value={current_body_surface} />
+                </Grid>
+
+                <Grid item xs>
+                  <Typography>
+                    <strong>Ciclos</strong>
+                  </Typography>
+                  <Typography>
+                    <Pluralize singular="ciclo" count={cycles} />
+                  </Typography>
+                </Grid>
+
+                <Grid item>
+                  {prescribes ? (
+                    <>
+                      <Typography>
+                        <strong>Prescribe</strong>
+                      </Typography>
+                      <FullName
+                        firstName={prescribes.first_name}
+                        lastName={prescribes.last_name}
+                      />
+                    </>
+                  ) : null}
+                </Grid>
+
+                <Grid item style={{ overflow: "auto" }}>
+                  <Typography gutterBottom variant="subtitle1">
+                    Sesiones
+                  </Typography>
+                  {sessions.length > 0 ? (
+                    <ChemotherapySessionList {...props} sessions={sessions} />
+                  ) : null}
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        );
       }}
     </Query>
   );

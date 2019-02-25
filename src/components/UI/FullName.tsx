@@ -4,7 +4,7 @@ import Typography, { TypographyProps } from "@material-ui/core/Typography";
 
 interface Props extends TypographyProps {
   firstName: string;
-  lastName: string;
+  lastName?: string;
 }
 
 export default function FullName({ firstName, lastName, ...props }: Props) {

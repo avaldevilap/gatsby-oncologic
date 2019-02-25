@@ -1,5 +1,36 @@
 query chemotherapyByIdQuery($id: Int!) {
   chemotherapy: chemotherapies_chemotherapy_by_pk(id: $id) {
     id
+    protocol: chemotherapiesProtocolByprotocolId {
+      name
+    }
+    date
+    current_weight
+    current_size
+    current_body_surface
+    cycles
+    prescribes: employeesEmployeeByprescribesId {
+      first_name
+      last_name
+    }
+    sessions: chemotherapiesChemotherapysessionsBychemotherapyId(
+      order_by: { date: desc }
+    ) {
+      date
+      assisted
+      observations_of_cytostats
+      observations_of_concomitants
+      meds: chemotherapiesMedicationsBysessionId {
+        drug: drugsDrugBydrugId {
+          name
+        }
+        dose
+        days
+        route_of_administration: chemotherapiesRouteofadministrationByrouteOfAdministrationId {
+          name
+        }
+        prescribed_dose
+      }
+    }
   }
 }

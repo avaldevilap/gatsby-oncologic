@@ -54,7 +54,7 @@ export default React.memo(function SubjectList(props: any) {
                       </ListItemAvatar>
                       <ListItemText
                         primary={`${first_name} ${last_name}`}
-                        secondary={moment(age_at_diagnosis).fromNow(true)}
+                        // secondary={moment(age_at_diagnosis).fromNow(true)}
                       />
                     </ListItem>
                   );

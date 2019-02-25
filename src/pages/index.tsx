@@ -1,6 +1,5 @@
 import "moment/locale/es";
 
-// import "react-virtualized/styles.css";
 import Img from "gatsby-image";
 import * as moment from "moment";
 import * as React from "react";
@@ -8,12 +7,14 @@ import * as React from "react";
 import { Grid, Typography } from "@material-ui/core";
 
 import Layout from "../components/layout";
+import SEO from "../components/SEO";
 
 moment.locale("es");
 
 export default () => {
   return (
     <Layout>
+      <SEO title="Inicio" />
       <Grid item sm={12}>
         <Typography variant="title">Amazing Pandas Eating Things</Typography>
       </Grid>

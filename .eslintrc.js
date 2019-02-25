@@ -18,6 +18,9 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module"
   },
-  plugins: ["@typescript-eslint", "react"],
-  rules: {}
+  plugins: ["@typescript-eslint", "react", "react-hooks"],
+  rules: {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warning"
+  }
 };

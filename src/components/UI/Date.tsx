@@ -4,13 +4,13 @@ import * as React from "react";
 import Typography, { TypographyProps } from "@material-ui/core/Typography";
 
 interface Props extends TypographyProps {
-  date: string;
+  value: string;
   fromNow?: boolean;
 }
 
-export default function Date({ date, fromNow, ...props }: Props) {
+export default function Date({ value, fromNow, ...props }: Props) {
   if (fromNow) {
-    return <Typography {...props}>{moment(date).fromNow(true)}</Typography>;
+    return <Typography {...props}>{moment(value).fromNow(true)}</Typography>;
   }
-  return <Typography {...props}>{moment(date).format("LL")}</Typography>;
+  return <Typography {...props}>{moment(value).format("LL")}</Typography>;
 }

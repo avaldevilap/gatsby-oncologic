@@ -1,5 +1,5 @@
-query neoplasmByIdQuery($id: Int!) {
-  neoplasm: subjects_descriptionofthisneoplasm_by_pk(id: $id) {
+query neoplasmById($id: Int!) {
+  neoplasm: neoplasms_neoplasm_by_pk(id: $id) {
     id
     topography: icdOTopographyByprimarySiteId {
       code
@@ -11,12 +11,25 @@ query neoplasmByIdQuery($id: Int!) {
     }
     date_of_diagnosis
     laterality
-    diagnostic_confirmation
-    differentiation_grade
-    clinical_extension
-    clinical_stage
-    source_of_info
+    diagnostic_confirmation: neoplasmsDiagnosticconfirmationBydiagnosticConfirmationId {
+      name
+    }
+    differentiation_grade: neoplasmsDifferentiationgradeBydifferentiationGradeId {
+      name
+    }
+    clinical_extension: neoplasmsClinicalextensionByclinicalExtensionId {
+      name
+    }
+    clinical_stage: neoplasmsClinicalstageByclinicalStageId {
+      name
+    }
+    source: neoplasmsSourceBysourceId {
+      name
+    }
     date_of_report
-    medic_that_report
+    medic_that_report: employeesEmployeesBymedicThatReportId {
+      first_name
+      last_name
+    }
   }
 }

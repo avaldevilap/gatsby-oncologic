@@ -10,39 +10,28 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 export default function ChemotherapyList(props: any) {
   const { chemotherapies, navigate, location } = props;
 
-  if (chemotherapies.length > 0) {
-    return (
-      <List
-        dense
-        subheader={<ListSubheader component="div">Quimioterapia</ListSubheader>}
-      >
-        {chemotherapies.map(({ id, protocol, date }, index) => (
-          <ListItem
-            key={index}
-            button
-            divider
-            onClick={() =>
-              navigate("/subjects", {
-                state: { ...location.state, chemotherapyId: id }
-              })
-            }
-          >
-            <ListItemText
-              primary={protocol.name}
-              secondary={<Date date={date} component="span" />}
-            />
-          </ListItem>
-        ))}
-      </List>
-    );
-  }
   return (
     <List
-      subheader={<ListSubheader component="div">Quimioterapia</ListSubheader>}
+      dense
+      subheader={<ListSubheader component="div">Quimioterapias</ListSubheader>}
     >
-      <ListItem>
-        <ListItemText primary="No existe" />
-      </ListItem>
+      {chemotherapies.map(({ id, protocol, date }, index) => (
+        <ListItem
+          key={index}
+          button
+          divider
+          onClick={() =>
+            navigate("/subjects", {
+              state: { ...location.state, chemotherapyId: id }
+            })
+          }
+        >
+          <ListItemText
+            primary={protocol.name}
+            secondary={<Date value={date} variant="caption" component="span" />}
+          />
+        </ListItem>
+      ))}
     </List>
   );
 }

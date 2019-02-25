@@ -11,7 +11,7 @@ import Layout from "../components/layout";
 import NeoplasmDetail from "../components/NeoplasmDetail";
 import PatientDetail from "../components/patient-detail";
 import SEO from "../components/SEO";
-import SubjectList from "../components/subject-list";
+import SubjectList from "../components/SubjectList";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -35,49 +35,28 @@ export default withStyles(styles)(
       <Layout>
         <SEO title="Pacientes" />
         <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>
+          <Paper style={{ height: "85vh" }}>
             <SubjectList {...props} />
           </Paper>
         </Grid>
         <Grid container item xs={12} sm={6} md={3}>
           {props.location.state && props.location.state.subjectId ? (
-            <Grow in>
-              <Paper className={classes.paper}>
-                <PatientDetail {...props} id={props.location.state.subjectId} />
-              </Paper>
-            </Grow>
-          ) : (
-            ""
-          )}
+            <PatientDetail {...props} id={props.location.state.subjectId} />
+          ) : null}
         </Grid>
         {props.location.state && props.location.state.neoplasmId > 0 ? (
           <Grid container item xs={12} sm={6} md={3}>
-            <Grow in>
-              <Paper className={classes.paper}>
-                <NeoplasmDetail
-                  {...props}
-                  id={props.location.state.neoplasmId}
-                />
-              </Paper>
-            </Grow>
+            <NeoplasmDetail {...props} id={props.location.state.neoplasmId} />
           </Grid>
-        ) : (
-          ""
-        )}
+        ) : null}
         {props.location.state && props.location.state.chemotherapyId > 0 ? (
-          <Grid item xs={12} sm={6} md={3}>
-            <Grow in>
-              <Paper className={classes.paper}>
-                <ChemotherapyDetail
-                  {...props}
-                  id={props.location.state.chemotherapyId}
-                />
-              </Paper>
-            </Grow>
+          <Grid container item xs={12} sm={6} md={3}>
+            <ChemotherapyDetail
+              {...props}
+              id={props.location.state.chemotherapyId}
+            />
           </Grid>
-        ) : (
-          ""
-        )}
+        ) : null}
       </Layout>
     );
   }

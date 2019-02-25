@@ -3368,10 +3368,20 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+date-fns@^2.0.0-alpha.27:
+  version "2.0.0-alpha.27"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-alpha.27.tgz#5ecd4204ef0e7064264039570f6e8afbc014481c"
+  integrity sha512-cqfVLS+346P/Mpj2RpDrBv0P4p2zZhWWvfY5fuWrXNR/K38HaAGEkeOwb47hIpQP9Jr/TIxjZ2/sNMQwdXuGMg==
+
 date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
+
+dayjs@^1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.6.tgz#b7a8ccfef173dae03e83a05a58788c9dbe948a35"
+  integrity sha512-NLhaSS1/wWLRFy0Kn/VmsAExqll2zxRUPmPbqJoeMKQrFxG+RT94VMSE+cVljB6A76/zZkR0Xub4ihTHQ5HgGg==
 
 debounce@^1.1.0:
   version "1.2.0"
@@ -4166,6 +4176,11 @@ eslint-plugin-jsx-a11y@^6.0.3, eslint-plugin-jsx-a11y@^6.2.1:
     has "^1.0.3"
     jsx-ast-utils "^2.0.1"
 
+eslint-plugin-react-hooks@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-1.2.0.tgz#a1c78e792b8d7d3e9c2a2aad28df80b9b5cd1101"
+  integrity sha512-pb/pwyHg0K3Ss/8loSwCGRSXIsvPBHWfzcP/6jeei0SgWBOyXRbcKFpGxolg0xSmph0jQKLyM27B74clbZM/YQ==
+
 eslint-plugin-react@^7.12.4, eslint-plugin-react@^7.8.2:
   version "7.12.4"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.12.4.tgz#b1ecf26479d61aee650da612e425c53a99f48c8c"
@@ -4928,10 +4943,23 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
+formik-effect@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/formik-effect/-/formik-effect-1.2.0.tgz#5d34287012ee04248d13c8945a85dc0a26ce0567"
+  integrity sha512-uKQQIgim/RHCDuN92lr6N5rhu/5zbaeAzWdcVXtDEF5YasDlIHWcPfOWTbmgCNUTxdJJseSh2fL2Kg/e/P7itA==
+
 formik-material-ui@^0.0.16:
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/formik-material-ui/-/formik-material-ui-0.0.16.tgz#bb56f46589df94d97d2f4be362d743b26143dd44"
   integrity sha512-LVv7WG5o5VmKa2K1JUhr/NbCzgzlZrZXEUOXH57P44zVE+R8cOELy5U4RV7VU5lLQW4sq5nlBatW01WrqtfoDQ==
+
+formik-persist@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/formik-persist/-/formik-persist-1.1.0.tgz#fbd2f11db4cb882a0c6f83646028f603bb43511d"
+  integrity sha512-tZyyghHinnoqptYVD8vfkN8rg8sFKIuc1INFpuspTXffq1H8eeI1aYFiyoq2gNE1qIVJfPy+bzUItx/9qyO8Hw==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    react-fast-compare "^2.0.1"
 
 formik@^1.4.3:
   version "1.5.1"
@@ -5161,6 +5189,11 @@ gatsby-plugin-react-helmet@^3.0.6:
   integrity sha512-y8YRZ660HOsplv9LN/RVxXJquRukvgcoMhGba40NzeocIKcVjkHdk0lrpWKGdxReuLlFQEn4KrX7EbbKN1/ylg==
   dependencies:
     "@babel/runtime" "^7.0.0"
+
+gatsby-plugin-react-native-web@2.0.0-beta.0:
+  version "2.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-react-native-web/-/gatsby-plugin-react-native-web-2.0.0-beta.0.tgz#421bcdd96f42b7c1b13a2b70c73f508884f5a88b"
+  integrity sha512-ApJUgNEJw9bBazD6cmdhpX5j/3tfzRVgjJGKOM81ZF4Y0teakZFmZJsCeR/TY4ZM6hP+bCT+Le8CY65IFeu3eA==
 
 gatsby-plugin-sharp@^2.0.20:
   version "2.0.21"
@@ -7349,6 +7382,11 @@ lodash._reinterpolate@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
+
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
 lodash.every@^4.6.0:
   version "4.6.0"
@@ -9587,6 +9625,13 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-apollo-hooks@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/react-apollo-hooks/-/react-apollo-hooks-0.4.1.tgz#563c4168a1e6b79c1fae75996aa13d7cc88843a8"
+  integrity sha512-pDeeB2djHEZrffbx2/TJDuUI960KDYYGpkEwpeKUPx+NBT4hYFpnza/NwRKXPENDInr1BNSdnWIf4vE/iIkYLg==
+  dependencies:
+    lodash "^4.17.11"
 
 react-apollo@^2.4.1:
   version "2.4.1"

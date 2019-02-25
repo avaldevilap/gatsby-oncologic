@@ -8,6 +8,7 @@ query subjectByIdQuery($id: Int!) {
     first_name
     last_name
     medical_record
+    age_at_diagnosis
     gender
     race: subjectsRaceByraceLinkId {
       name
