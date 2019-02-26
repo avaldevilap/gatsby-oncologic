@@ -1,8 +1,12 @@
-query allSubjectsQuery {
+query allSubjectsQuery($value: String) {
   subjects: subjects_subject_aggregate(
-    limit: 1000
     where: {
-      chemotherapiesChemotherapysBysubjectId: { id: { _is_null: false } }
+      _or: [
+        { ic: { _ilike: $value } }
+        { medical_record: { _ilike: $value } }
+        { first_name: { _ilike: $value } }
+        { last_name: { _ilike: $value } }
+      ]
     }
   ) {
     aggregate {
@@ -10,6 +14,7 @@ query allSubjectsQuery {
     }
     nodes {
       id
+      ic
       first_name
       last_name
       age_at_diagnosis

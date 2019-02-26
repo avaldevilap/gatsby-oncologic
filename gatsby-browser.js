@@ -1,8 +1,8 @@
 import React from "react";
 import { ApolloProvider } from "react-apollo";
+import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
 import ApolloClient from "apollo-boost";
 
-console.log(process.env);
 const client = new ApolloClient({
   uri: `http://localhost:8080/v1alpha1/graphql`,
   request: operation =>
@@ -13,5 +13,9 @@ const client = new ApolloClient({
 });
 
 export const wrapRootElement = ({ element }) => {
-  return <ApolloProvider client={client}>{element}</ApolloProvider>;
+  return (
+    <ApolloProvider client={client}>
+      <ApolloHooksProvider client={client}>{element}</ApolloHooksProvider>
+    </ApolloProvider>
+  );
 };

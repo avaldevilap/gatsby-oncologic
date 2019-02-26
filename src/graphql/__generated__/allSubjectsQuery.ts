@@ -13,6 +13,7 @@ export interface allSubjectsQuery_subjects_aggregate {
 export interface allSubjectsQuery_subjects_nodes {
   __typename: "subjects_subject";
   id: number;
+  ic: string;
   first_name: string;
   last_name: string;
   age_at_diagnosis: any | null;
@@ -29,4 +30,8 @@ export interface allSubjectsQuery {
    * fetch aggregated fields from the table: "subjects_subject"
    */
   subjects: allSubjectsQuery_subjects;
+}
+
+export interface allSubjectsQueryVariables {
+  value?: string | null;
 }

@@ -1,69 +1,110 @@
-import * as moment from "moment";
 import * as React from "react";
-import { Query } from "react-apollo";
+import { useQuery } from "react-apollo-hooks";
 import { AutoSizer, List, ListRowProps } from "react-virtualized";
 
+import Avatar from "@material-ui/core/Avatar";
+import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
+import { RouteComponentProps } from "@reach/router";
 
+import { allSubjectsQuery as queryData } from "../graphql/__generated__/allSubjectsQuery";
 import allSubjectsQuery from "../graphql/allSubjectsQuery.graphql";
-import { ListItemAvatar, Avatar } from "@material-ui/core";
+import FilterForm, { FilterFormValues } from "./FilterForm";
+import Pluralize from "react-pluralize";
+import queryString from "query-string";
 
-export default React.memo(function SubjectList(props: any) {
+export interface SubjectListProps {
+  filters?: FilterFormValues;
+  onLoad?: (count: number) => void;
+}
+
+function SubjectList(props: SubjectListProps & RouteComponentProps) {
+  const [filters, setFilters] = React.useState({});
+
+  const { search } = queryString.parse(props.location.search);
+
+  const { data, error, loading } = useQuery(allSubjectsQuery, {
+    variables: { value: search }
+  });
+
+  const { subjects }: queryData = data;
+
+  if (error) {
+    return `Error! ${error.message}`;
+  }
+
+  if (loading) {
+    return <span>Cargando...</span>;
+  }
+
+  const rowRenderer = ({ key, index, style }: ListRowProps) => {
+    const { id, first_name, last_name } = subjects.nodes[index];
+
+    return (
+      <ListItem
+        key={key}
+        style={style}
+        button
+        divider
+        onClick={() => {
+          props.navigate("/subjects", {
+            state: { subjectId: id }
+          });
+        }}
+      >
+        <ListItemAvatar>
+          <Avatar>{`${first_name.charAt(0)}${last_name.charAt(0)}`}</Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          primary={`${first_name} ${last_name}`}
+          // secondary={moment(age_at_diagnosis).fromNow(true)}
+        />
+      </ListItem>
+    );
+  };
+
   return (
-    <Query query={allSubjectsQuery}>
-      {({ loading, error, data }) => {
-        if (loading) {
-          return "Cargando...";
-        }
-        if (error) {
-          return `Error! ${error.message}`;
-        }
-        return (
-          <AutoSizer>
-            {({ width, height }) => (
+    <>
+      <FilterForm {...props} onSubmit={values => setFilters(values)} />
+      <Divider />
+      {data.subjects.nodes.length > 0 ? (
+        <AutoSizer>
+          {({ width, height }) => (
+            <>
               <List
                 rowCount={data.subjects.nodes.length}
                 width={width}
-                height={height}
+                height={height - 66}
                 rowHeight={66}
-                rowRenderer={({ key, index, style }: ListRowProps) => {
-                  const {
-                    id,
-                    first_name,
-                    last_name,
-                    age_at_diagnosis
-                  } = data.subjects.nodes[index];
-
-                  return (
-                    <ListItem
-                      key={key}
-                      style={style}
-                      button
-                      divider
-                      onClick={() => {
-                        props.navigate("/subjects", {
-                          state: { subjectId: id }
-                        });
-                      }}
-                    >
-                      <ListItemAvatar>
-                        <Avatar>{`${first_name.charAt(0)}${last_name.charAt(
-                          0
-                        )}`}</Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={`${first_name} ${last_name}`}
-                        // secondary={moment(age_at_diagnosis).fromNow(true)}
-                      />
-                    </ListItem>
-                  );
-                }}
+                rowRenderer={rowRenderer}
               />
-            )}
-          </AutoSizer>
-        );
-      }}
-    </Query>
+              <Typography style={{ width }}>
+                <Pluralize
+                  singular="paciente"
+                  count={subjects.aggregate.count}
+                />
+              </Typography>
+            </>
+          )}
+        </AutoSizer>
+      ) : (
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          style={{ height: "90%" }}
+        >
+          <Grid item>
+            <Typography variant="caption">Sin resultados</Typography>
+          </Grid>
+        </Grid>
+      )}
+    </>
   );
-});
+}
+
+export default SubjectList;

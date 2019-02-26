@@ -19,7 +19,7 @@ const styles = (theme: Theme) =>
       textDecoration: "none"
     },
     content: {
-      marginTop: 70,
+      marginTop: "4%",
       flexGrow: 1,
       padding: theme.spacing.unit * 3
     }
@@ -53,7 +53,7 @@ export default withStyles(styles)(({ children, classes }: Props) => (
           </Toolbar>
         </AppBar>
         <main className={classes.content}>
-          <Grid container spacing={16}>
+          <Grid container spacing={8}>
             {children}
           </Grid>
         </main>

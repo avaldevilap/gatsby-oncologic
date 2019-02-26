@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import { RouteComponentProps } from "@reach/router";
 
 import ChemotherapyDetail from "../components/ChemotherapyDetail";
+import FilterForm, { FilterFormValues } from "../components/FilterForm";
 import Layout from "../components/layout";
 import NeoplasmDetail from "../components/NeoplasmDetail";
 import PatientDetail from "../components/patient-detail";
@@ -20,10 +21,6 @@ const styles = (theme: Theme) =>
       // ...theme.mixins.gutters(),
       paddingTop: theme.spacing.unit * 2,
       paddingBottom: theme.spacing.unit * 2
-    },
-    paperWithPadding: {
-      height: "85vh",
-      padding: "0 10px 0 10px"
     }
   });
 
@@ -31,9 +28,22 @@ interface Props extends WithStyles<typeof styles> {}
 
 export default withStyles(styles)(
   ({ classes, ...props }: Props & RouteComponentProps) => {
+    // const [filters, setFilters] = React.useState({});
+    // const [queryCount, setQueryCount] = React.useState(0);
+
     return (
       <Layout>
         <SEO title="Pacientes" />
+        {/* <Grid container item>
+          <Grid item xs={12} sm={6} md={3}>
+            <FilterForm
+              onSubmit={(values: FilterFormValues) => {
+                setFilters(values);
+              }}
+            />
+            {queryCount}
+          </Grid>
+        </Grid> */}
         <Grid item xs={12} sm={6} md={3}>
           <Paper style={{ height: "85vh" }}>
             <SubjectList {...props} />
