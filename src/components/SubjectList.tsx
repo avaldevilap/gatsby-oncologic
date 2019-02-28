@@ -13,7 +13,7 @@ import { RouteComponentProps } from "@reach/router";
 
 import { allSubjectsQuery as queryData } from "../graphql/__generated__/allSubjectsQuery";
 import allSubjectsQuery from "../graphql/allSubjectsQuery.graphql";
-import FilterForm, { FilterFormValues } from "./FilterForm";
+import SubjectSearchForm, { FilterFormValues } from "./SubjectSearchForm";
 import Pluralize from "react-pluralize";
 import queryString from "query-string";
 
@@ -69,7 +69,7 @@ function SubjectList(props: SubjectListProps & RouteComponentProps) {
 
   return (
     <>
-      <FilterForm {...props} onSubmit={values => setFilters(values)} />
+      <SubjectSearchForm {...props} onSubmit={values => setFilters(values)} />
       <Divider />
       {data.subjects.nodes.length > 0 ? (
         <AutoSizer>
