@@ -310,3 +310,4 @@ typings/
 .next
 .cache
 /public
+__generated__
