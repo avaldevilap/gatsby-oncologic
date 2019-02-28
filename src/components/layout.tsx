@@ -46,11 +46,12 @@ export default withStyles(styles)(({ children, classes }: Props) => {
         <Toolbar>
           <Avatar alt="logo" src={logo} />
           {/* <img src={logo} alt="logo" width={40} height={40} /> */}
-          <Link to="/" style={{ flex: 1 }} className={classes.link}>
+          <Link to="/" className={classes.link}>
             <Typography variant="h6" style={{ color: "white" }}>
               {data.site.siteMetadata.title}
             </Typography>
           </Link>
+          <div style={{ flex: 1 }} />
           <Button component={Link} to="/subjects" color="inherit">
             Pacientes
           </Button>
