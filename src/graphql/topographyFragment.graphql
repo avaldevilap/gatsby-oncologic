@@ -1,4 +1,0 @@
-fragment Topography on icd_o_topography {
-  code
-  description
-}
