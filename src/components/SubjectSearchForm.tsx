@@ -24,7 +24,7 @@ export interface FilterFormProps {
   onSubmit: (values: FilterFormValues) => void;
 }
 
-function FilterForm(props: FilterFormProps & RouteComponentProps) {
+function SubjectSearchForm(props: FilterFormProps & RouteComponentProps) {
   const { search } = queryString.parse(props.location.search);
 
   return (
@@ -82,4 +82,4 @@ function FilterForm(props: FilterFormProps & RouteComponentProps) {
   );
 }
 
-export default FilterForm;
+export default SubjectSearchForm;
