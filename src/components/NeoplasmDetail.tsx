@@ -13,9 +13,9 @@ import {
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import neoplasmByIdQuery from "../graphql/neoplasmByIdQuery.graphql";
 import Date from "./UI/Date";
 import Laterality from "./UI/Laterality";
+import gql from "graphql-tag";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -35,7 +35,46 @@ interface Props extends WithStyles<typeof styles> {
 function NeoplasmDetail(props: Props) {
   const { id, classes } = props;
   return (
-    <Query query={neoplasmByIdQuery} variables={{ id }}>
+    <Query
+      query={gql`
+        query neoplasmById($id: Int!) {
+          neoplasm: neoplasms_neoplasm_by_pk(id: $id) {
+            id
+            topography {
+              code
+              description
+            }
+            morphology: icdOMorphologyByhistologicTypeId {
+              code
+              description
+            }
+            date_of_diagnosis
+            laterality
+            diagnostic_confirmation: neoplasmsDiagnosticconfirmationBydiagnosticConfirmationId {
+              name
+            }
+            differentiation_grade: neoplasmsDifferentiationgradeBydifferentiationGradeId {
+              name
+            }
+            clinical_extension: neoplasmsClinicalextensionByclinicalExtensionId {
+              name
+            }
+            clinical_stage: neoplasmsClinicalstageByclinicalStageId {
+              name
+            }
+            source: neoplasmsSourceBysourceId {
+              name
+            }
+            date_of_report
+            medic_that_report: employeesEmployeesBymedicThatReportId {
+              first_name
+              last_name
+            }
+          }
+        }
+      `}
+      variables={{ id }}
+    >
       {({ loading, error, data }) => {
         if (loading) {
           return "Cargando...";

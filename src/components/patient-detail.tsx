@@ -7,7 +7,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import { subjectByIdQuery_subject } from "../graphql/__generated__/subjectByIdQuery";
-import subjectByIdQuery from "../graphql/subjectByIdQuery.graphql";
 import ChemotherapyList from "./ChemotherapyList";
 import NeoplasmList from "./NeoplasmList";
 import SurgeryList from "./SurgeryList";
@@ -15,6 +14,7 @@ import Address from "./UI/Address";
 import Date from "./UI/Date";
 import FullName from "./UI/FullName";
 import Gender from "./UI/Gender";
+import gql from "graphql-tag";
 
 interface Props {
   /**
@@ -27,7 +27,55 @@ export default function PatientDetail(props: Props) {
   const { id } = props;
 
   return (
-    <Query query={subjectByIdQuery} variables={{ id }}>
+    <Query
+      query={gql`
+        query subjectByIdQuery($id: Int!) {
+          subject: subjects_subject_by_pk(id: $id) {
+            id
+            ic
+            first_name
+            last_name
+            medical_record
+            age_at_diagnosis
+            gender
+            race: subjectsRaceByraceLinkId {
+              name
+            }
+            date_of_birth
+            address
+            municipality: subjectsMunicipalityBymunicipalityId {
+              name
+              county: subjectsCountyBycountyId {
+                name
+              }
+            }
+            neoplasms: subjectsDescriptionofthisneoplasmsBysubjectId {
+              id
+              topography: icdOTopographyByprimarySiteId {
+                code
+                description
+              }
+              morphology: icdOMorphologyByhistologicTypeId {
+                code
+                description
+              }
+            }
+            chemotherapies {
+              id
+              protocol {
+                name
+              }
+              date
+            }
+            surgeries: surgeriesSurgerysBysubjectId {
+              id
+              date
+            }
+          }
+        }
+      `}
+      variables={{ id }}
+    >
       {({ loading, error, data }) => {
         if (loading) {
           return "Cargando...";

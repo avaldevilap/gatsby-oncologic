@@ -16,11 +16,11 @@ import Typography from "@material-ui/core/Typography";
 import Date from "../components/UI/Date";
 import FullName from "../components/UI/FullName";
 import { chemotherapyByIdQuery_chemotherapy } from "../graphql/__generated__/chemotherapyByIdQuery";
-import chemotherapyByIdQuery from "../graphql/chemotherapyByIdQuery.graphql";
 import ChemotherapySessionList from "./ChemotherapySessionList";
 import Pluralize from "react-pluralize";
 import Weight from "./UI/Weight";
 import Height from "./UI/Height";
+import gql from "graphql-tag";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -50,7 +50,45 @@ interface Props extends WithStyles<typeof styles> {
 function ChemotherapyDetail(props: Props) {
   const { id, classes } = props;
   return (
-    <Query query={chemotherapyByIdQuery} variables={{ id }}>
+    <Query
+      query={gql`
+        query chemotherapyByIdQuery($id: Int!) {
+          chemotherapy: chemotherapies_chemotherapy_by_pk(id: $id) {
+            id
+            protocol {
+              name
+            }
+            date
+            current_weight
+            current_size
+            current_body_surface
+            cycles
+            prescribes {
+              first_name
+              last_name
+            }
+            chemotherapySessions(order_by: { date: desc }) {
+              date
+              assisted
+              observations_of_cytostats
+              observations_of_concomitants
+              meds: chemotherapiesMedicationsBysessionId {
+                drug: drugsDrugBydrugId {
+                  name
+                }
+                dose
+                days
+                route_of_administration: chemotherapiesRouteofadministrationByrouteOfAdministrationId {
+                  name
+                }
+                prescribed_dose
+              }
+            }
+          }
+        }
+      `}
+      variables={{ id }}
+    >
       {({ loading, error, data }) => {
         if (loading) {
           return "Cargando...";

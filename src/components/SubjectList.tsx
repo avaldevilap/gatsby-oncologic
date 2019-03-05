@@ -12,10 +12,10 @@ import Typography from "@material-ui/core/Typography";
 import { RouteComponentProps } from "@reach/router";
 
 import { allSubjectsQuery as queryData } from "../graphql/__generated__/allSubjectsQuery";
-import allSubjectsQuery from "../graphql/allSubjectsQuery.graphql";
 import SubjectSearchForm, { FilterFormValues } from "./SubjectSearchForm";
 import Pluralize from "react-pluralize";
 import queryString from "query-string";
+import gql from "graphql-tag";
 
 export interface SubjectListProps {
   filters?: FilterFormValues;
@@ -27,9 +27,36 @@ function SubjectList(props: SubjectListProps & RouteComponentProps) {
 
   const { search } = queryString.parse(props.location.search);
 
-  const { data, error, loading } = useQuery(allSubjectsQuery, {
-    variables: { value: search }
-  });
+  const { data, error, loading } = useQuery(
+    gql`
+      query allSubjectsQuery($value: String) {
+        subjects: subjects_subject_aggregate(
+          where: {
+            _or: [
+              { ic: { _ilike: $value } }
+              { medical_record: { _ilike: $value } }
+              { first_name: { _ilike: $value } }
+              { last_name: { _ilike: $value } }
+            ]
+          }
+        ) {
+          aggregate {
+            count
+          }
+          nodes {
+            id
+            ic
+            first_name
+            last_name
+            age_at_diagnosis
+          }
+        }
+      }
+    `,
+    {
+      variables: { value: search }
+    }
+  );
 
   const { subjects }: queryData = data;
 
