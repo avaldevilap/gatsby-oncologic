@@ -26,14 +26,11 @@ const styles = (theme: Theme) =>
   });
 
 interface Props extends WithStyles<typeof styles> {
-  /**
-   * Neoplasm id
-   */
   id: number;
 }
 
 function NeoplasmDetail(props: Props) {
-  const { id, classes } = props;
+  const { id } = props;
   return (
     <Query
       query={gql`
@@ -83,7 +80,6 @@ function NeoplasmDetail(props: Props) {
           return `Error! ${error.message}`;
         }
         const {
-          id,
           topography,
           morphology,
           date_of_diagnosis,
@@ -97,207 +93,159 @@ function NeoplasmDetail(props: Props) {
           medic_that_report
         } = data.neoplasm;
 
+        const title: string = topography
+          ? `${topography.code} - ${topography.description}`
+          : "No definido";
+        const subheader: string = morphology
+          ? `${morphology.code} - ${morphology.description}`
+          : "No definido";
+
         return (
           <Card>
-            <CardHeader
-              title={`${topography.code} - ${topography.description}`}
-              subheader={`${morphology.code} - ${morphology.description}`}
-            />
+            <CardHeader title={title} subheader={subheader} />
             <CardContent>
               <Grid container spacing={16}>
-                <Grid item xs>
-                  <Typography>
-                    <strong>Fecha de Diagnóstico</strong>
-                  </Typography>
-                  <Date value={date_of_diagnosis} />
+                <Grid item xs={12}>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <Typography>
+                            <strong>Fecha de Diagnóstico</strong>
+                          </Typography>
+                        </td>
+                        <td>
+                          <Date value={date_of_diagnosis} />
+                        </td>
+                      </tr>
+                      {laterality !== "1" ? (
+                        <tr>
+                          <td>
+                            <Typography>
+                              <strong>Lateralidad</strong>
+                            </Typography>
+                          </td>
+                          <td>
+                            <Laterality value={laterality} />
+                          </td>
+                        </tr>
+                      ) : null}
+                      <tr>
+                        <td>
+                          <Typography>
+                            <strong>Confirmación del Diagnóstico</strong>
+                          </Typography>
+                        </td>
+                        <td>
+                          <Typography>
+                            {diagnostic_confirmation.name}
+                          </Typography>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Typography>
+                            <strong>Grado de Diferenciación</strong>
+                          </Typography>
+                        </td>
+                        <td>
+                          <Typography>{differentiation_grade.name}</Typography>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Typography>
+                            <strong>Extensión Clínica</strong>
+                          </Typography>
+                        </td>
+                        <td>
+                          <Typography>{clinical_extension.name}</Typography>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Typography>
+                            <strong>Etapa Clínica</strong>
+                          </Typography>
+                        </td>
+                        <td>
+                          <Typography>{clinical_stage.name}</Typography>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Typography>
+                            <strong>Fuente</strong>
+                          </Typography>
+                        </td>
+                        <td>
+                          <Typography>{source.name}</Typography>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Typography>
+                            <strong>Fecha de Reporte</strong>
+                          </Typography>
+                        </td>
+                        <td>
+                          <Date value={date_of_report} />
+                        </td>
+                      </tr>
+                      {medic_that_report ? (
+                        <tr>
+                          <td>
+                            <Typography>
+                              <strong>Reportó</strong>
+                            </Typography>
+                          </td>
+                          <td>
+                            <Typography>{medic_that_report}</Typography>
+                          </td>
+                        </tr>
+                      ) : null}
+                      {medic_that_report ? (
+                        <tr>
+                          <td>
+                            <Typography>
+                              <strong>Tumor(T)</strong>
+                            </Typography>
+                          </td>
+                          <td>
+                            <Typography>{medic_that_report}</Typography>
+                          </td>
+                        </tr>
+                      ) : null}
+                      {medic_that_report ? (
+                        <tr>
+                          <td>
+                            <Typography>
+                              <strong>Ganglios Linfáticos(N)</strong>
+                            </Typography>
+                          </td>
+                          <td>
+                            <Typography>{medic_that_report}</Typography>
+                          </td>
+                        </tr>
+                      ) : null}
+                      {medic_that_report ? (
+                        <tr>
+                          <td>
+                            <Typography>
+                              <strong>Metástasis(M)</strong>
+                            </Typography>
+                          </td>
+                          <td>
+                            <Typography>{medic_that_report}</Typography>
+                          </td>
+                        </tr>
+                      ) : null}
+                    </tbody>
+                  </table>
                 </Grid>
-                {laterality !== "1" ? (
-                  <Grid item xs>
-                    <Typography>
-                      <strong>Lateralidad</strong>
-                    </Typography>
-                    <Laterality value={laterality} />
-                  </Grid>
-                ) : null}
-                <Grid item xs>
-                  <Typography>
-                    <strong>Confirmación del Diagnóstico</strong>
-                  </Typography>
-                  <Typography>{diagnostic_confirmation.name}</Typography>
-                </Grid>
-                <Grid item xs>
-                  <Typography>
-                    <strong>Grado de Diferenciación</strong>
-                  </Typography>
-                  <Typography>{differentiation_grade.name}</Typography>
-                </Grid>
-                <Grid item xs>
-                  <Typography>
-                    <strong>Extensión Clínica</strong>
-                  </Typography>
-                  <Typography>{clinical_extension.name}</Typography>
-                </Grid>
-                <Grid item xs>
-                  <Typography>
-                    <strong>Etapa Clínica</strong>
-                  </Typography>
-                  <Typography>{clinical_stage.name}</Typography>
-                </Grid>
-                <Grid item xs>
-                  <Typography>
-                    <strong>Fuente</strong>
-                  </Typography>
-                  <Typography>{source.name}</Typography>
-                </Grid>
-                <Grid item xs>
-                  <Typography>
-                    <strong>Fecha de Reporte</strong>
-                  </Typography>
-                  <Date value={date_of_report} />
-                </Grid>
-                {medic_that_report ? (
-                  <Grid item xs>
-                    <Typography>
-                      <strong>Reportó</strong>
-                    </Typography>
-                    <Typography>{medic_that_report}</Typography>
-                  </Grid>
-                ) : null}
-                {medic_that_report ? (
-                  <Grid item xs>
-                    <Typography>
-                      <strong>Tumor(T)</strong>
-                    </Typography>
-                    <Typography>{medic_that_report}</Typography>
-                  </Grid>
-                ) : null}
-                {medic_that_report ? (
-                  <Grid item xs>
-                    <Typography>
-                      <strong>Ganglios Linfáticos(N)</strong>
-                    </Typography>
-                    <Typography>{medic_that_report}</Typography>
-                  </Grid>
-                ) : null}
-                {medic_that_report ? (
-                  <Grid item xs>
-                    <Typography>
-                      <strong>Metástasis(M)</strong>
-                    </Typography>
-                    <Typography>{medic_that_report}</Typography>
-                  </Grid>
-                ) : null}
               </Grid>
             </CardContent>
           </Card>
-          // <Grid container spacing={16} className={classes.root}>
-          //   <Grid item xs={12}>
-          //     <Typography variant="title" align="center">{`${
-          //       topography.code
-          //     } - ${topography.description}`}</Typography>
-          //     <Typography
-          //       variant="subtitle1"
-          //       color="textSecondary"
-          //       align="center"
-          //     >{`${morphology.code} - ${morphology.description}`}</Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Fecha de Diagnóstico</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Date date={date_of_diagnosis} />
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Lateralidad</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Laterality value={laterality} />
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Confirmación del Diagnóstico</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography>{diagnostic_confirmation.name}</Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Grado de Diferenciación</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography>{differentiation_grade.name}</Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Extensión Clínica</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography>{clinical_extension.name}</Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Etapa Clínica</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography>{clinical_stage.name}</Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Fuente</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography>{source.name}</Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Fecha de Reporte</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Date date={date_of_report} />
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Reportó</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography>{medic_that_report}</Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Tumor(T)</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography>{medic_that_report}</Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Ganglios Linfáticos(N)</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography>{medic_that_report}</Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography align="right">
-          //       <strong>Metástasis(M)</strong>
-          //     </Typography>
-          //   </Grid>
-          //   <Grid item xs={6}>
-          //     <Typography>{medic_that_report}</Typography>
-          //   </Grid>
-          // </Grid>
         );
       }}
     </Query>
