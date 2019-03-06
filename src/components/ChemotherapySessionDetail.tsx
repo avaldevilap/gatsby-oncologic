@@ -84,7 +84,7 @@ export default withStyles(styles)(function ChemotherapySessionDetail(
         </>
       ) : null}
 
-      <Grid container spacing={8} xs={12}>
+      <Grid container spacing={8}>
         <Grid item style={{ overflowX: "auto" }}>
           <Table padding="dense">
             <TableHead>
@@ -105,7 +105,7 @@ export default withStyles(styles)(function ChemotherapySessionDetail(
                   route_of_administration,
                   prescribed_dose
                 }) => (
-                  <TableRow>
+                  <TableRow key={drug.name}>
                     <TableCell component="th" scope="row">
                       {drug.name}
                     </TableCell>
