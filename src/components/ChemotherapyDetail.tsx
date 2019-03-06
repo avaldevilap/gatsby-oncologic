@@ -15,7 +15,6 @@ import Typography from "@material-ui/core/Typography";
 
 import Date from "../components/UI/Date";
 import FullName from "../components/UI/FullName";
-import { chemotherapyByIdQuery_chemotherapy } from "../graphql/__generated__/chemotherapyByIdQuery";
 import ChemotherapySessionList from "./ChemotherapySessionList";
 import Pluralize from "react-pluralize";
 import Weight from "./UI/Weight";
@@ -41,9 +40,6 @@ const styles = (theme: Theme) =>
   });
 
 interface Props extends WithStyles<typeof styles> {
-  /**
-   * Neoplasm id
-   */
   id: number;
 }
 
@@ -105,8 +101,8 @@ function ChemotherapyDetail(props: Props) {
           current_body_surface,
           cycles,
           prescribes,
-          sessions
-        }: chemotherapyByIdQuery_chemotherapy = data.chemotherapy;
+          chemotherapySessions
+        } = data.chemotherapy;
 
         return (
           <Card>
@@ -166,8 +162,11 @@ function ChemotherapyDetail(props: Props) {
                   <Typography gutterBottom variant="subtitle1">
                     Sesiones
                   </Typography>
-                  {sessions.length > 0 ? (
-                    <ChemotherapySessionList {...props} sessions={sessions} />
+                  {chemotherapySessions.length > 0 ? (
+                    <ChemotherapySessionList
+                      {...props}
+                      sessions={chemotherapySessions}
+                    />
                   ) : null}
                 </Grid>
               </Grid>
