@@ -2,15 +2,13 @@ import * as React from "react";
 
 import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import { RouteComponentProps } from "@reach/router";
 
 import ChemotherapyDetail from "../components/ChemotherapyDetail";
-import FilterForm, { FilterFormValues } from "../components/FilterForm";
 import Layout from "../components/layout";
 import NeoplasmDetail from "../components/NeoplasmDetail";
-import PatientDetail from "../components/patient-detail";
+import PatientDetail from "../components/PatientDetail";
 import SEO from "../components/SEO";
 import SubjectList from "../components/SubjectList";
 
