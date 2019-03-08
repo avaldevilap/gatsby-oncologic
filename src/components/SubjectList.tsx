@@ -1,10 +1,15 @@
+import gql from "graphql-tag";
+import queryString from "query-string";
 import * as React from "react";
 import { useQuery } from "react-apollo-hooks";
-import { AutoSizer, List, ListRowProps } from "react-virtualized";
+import Pluralize from "react-pluralize";
+import AutoSizer from "react-virtualized-auto-sizer";
+import { areEqual, FixedSizeList, ListChildComponentProps } from "react-window";
 
 import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -13,19 +18,17 @@ import { RouteComponentProps } from "@reach/router";
 
 import { allSubjectsQuery as queryData } from "../graphql/__generated__/allSubjectsQuery";
 import SubjectSearchForm, { FilterFormValues } from "./SubjectSearchForm";
-import Pluralize from "react-pluralize";
-import queryString from "query-string";
-import gql from "graphql-tag";
 
 export interface SubjectListProps {
   filters?: FilterFormValues;
   onLoad?: (count: number) => void;
 }
 
-function SubjectList(props: SubjectListProps & RouteComponentProps) {
-  const [filters, setFilters] = React.useState({});
-
-  const { search } = queryString.parse(props.location.search);
+function SubjectList({
+  navigate,
+  location
+}: SubjectListProps & RouteComponentProps) {
+  const { search } = queryString.parse(location.search);
 
   const { data, error, loading } = useQuery<queryData>(
     gql`
@@ -65,20 +68,19 @@ function SubjectList(props: SubjectListProps & RouteComponentProps) {
   }
 
   if (loading) {
-    return <span>Cargando...</span>;
+    return <LinearProgress />;
   }
 
-  const rowRenderer = ({ key, index, style }: ListRowProps) => {
+  const Row = React.memo(({ index, style }: ListChildComponentProps) => {
     const { id, first_name, last_name } = subjects.nodes[index];
 
     return (
       <ListItem
-        key={key}
         style={style}
         button
         divider
         onClick={() => {
-          props.navigate("/subjects", {
+          navigate(`/subjects${location.search}`, {
             state: { subjectId: id }
           });
         }}
@@ -92,31 +94,34 @@ function SubjectList(props: SubjectListProps & RouteComponentProps) {
         />
       </ListItem>
     );
-  };
+  }, areEqual);
 
   return (
     <>
-      <SubjectSearchForm {...props} onSubmit={values => setFilters(values)} />
+      <SubjectSearchForm navigate={navigate} location={location} />
       <Divider />
       {data.subjects.nodes.length > 0 ? (
         <AutoSizer>
-          {({ width, height }) => (
-            <>
-              <List
-                rowCount={data.subjects.nodes.length}
-                width={width}
-                height={height - 66}
-                rowHeight={66}
-                rowRenderer={rowRenderer}
-              />
-              <Typography style={{ width }}>
-                <Pluralize
-                  singular="paciente"
-                  count={subjects.aggregate.count}
-                />
-              </Typography>
-            </>
-          )}
+          {({ height, width }) => {
+            return (
+              <>
+                <FixedSizeList
+                  width={width}
+                  height={height - 68}
+                  itemCount={data.subjects.nodes.length}
+                  itemSize={66}
+                >
+                  {Row}
+                </FixedSizeList>
+                <Typography style={{ width }}>
+                  <Pluralize
+                    singular="paciente"
+                    count={subjects.aggregate.count}
+                  />
+                </Typography>
+              </>
+            );
+          }}
         </AutoSizer>
       ) : (
         <Grid

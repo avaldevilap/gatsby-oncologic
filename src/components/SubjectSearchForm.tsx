@@ -17,32 +17,26 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import CloseIcon from "@material-ui/icons/Close";
 
 export interface FilterFormValues {
-  value?: string;
+  value?: string | string[];
 }
 
-export interface FilterFormProps {
-  onSubmit: (values: FilterFormValues) => void;
-}
+export interface FilterFormProps {}
 
-function SubjectSearchForm(props: FilterFormProps & RouteComponentProps) {
-  const { search } = queryString.parse(props.location.search);
+function SubjectSearchForm({
+  navigate,
+  location
+}: FilterFormProps & RouteComponentProps) {
+  const { search } = queryString.parse(location.search ? location.search : "");
 
   return (
     <Formik
-      initialValues={{ value: search || "" }}
+      initialValues={{ value: search }}
       onSubmit={(
         values: FilterFormValues,
         actions: FormikActions<FilterFormValues>
       ) => {
-        props.navigate(`/subjects?search=${values.value}`);
+        navigate(`/subjects?search=${values.value}`);
         actions.setSubmitting(false);
-      }}
-      onReset={(
-        values: FilterFormValues,
-        actions: FormikActions<FilterFormValues>
-      ) => {
-        props.navigate("/subjects");
-        actions.resetForm();
       }}
       render={(formikBag: FormikProps<FilterFormValues>) => (
         <Form style={{ height: 66, display: "flex", alignItems: "center" }}>
@@ -56,11 +50,14 @@ function SubjectSearchForm(props: FilterFormProps & RouteComponentProps) {
                 style={{ marginLeft: 8, flex: 1 }}
                 autoComplete="off"
                 endAdornment={
-                  <InputAdornment position="end" onClick={form.handleReset}>
-                    <IconButton
-                      aria-label="Toggle password visibility"
-                      //   onClick={form.handleReset}
-                    >
+                  <InputAdornment
+                    position="end"
+                    onClick={() => {
+                      form.resetForm({ value: "" });
+                      navigate("/subjects");
+                    }}
+                  >
+                    <IconButton aria-label="Toggle password visibility">
                       <CloseIcon />
                     </IconButton>
                   </InputAdornment>
