@@ -20,6 +20,7 @@ import Pluralize from "react-pluralize";
 import Weight from "./UI/Weight";
 import Height from "./UI/Height";
 import gql from "graphql-tag";
+import BMI from "./UI/BMI";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -129,10 +130,11 @@ function ChemotherapyDetail(props: Props) {
                 <Grid item xs>
                   <Typography>
                     <strong>
-                      <abbr title="Superficie Corporal">SC</abbr>
+                      <abbr title="Índice de Masa Corporal">IMC</abbr>
                     </strong>
                   </Typography>
-                  <Weight value={current_body_surface} />
+                  <BMI stature={current_size} weight={current_weight} />
+                  {/* <Weight value={current_body_surface} /> */}
                 </Grid>
 
                 <Grid item xs>

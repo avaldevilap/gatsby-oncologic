@@ -41,29 +41,29 @@ function NeoplasmDetail(props: Props) {
               code
               description
             }
-            morphology: icdOMorphologyByhistologicTypeId {
+            morphology {
               code
               description
             }
             date_of_diagnosis
             laterality
-            diagnostic_confirmation: neoplasmsDiagnosticconfirmationBydiagnosticConfirmationId {
+            diagnostic_confirmation {
               name
             }
-            differentiation_grade: neoplasmsDifferentiationgradeBydifferentiationGradeId {
+            differentiation_grade {
               name
             }
-            clinical_extension: neoplasmsClinicalextensionByclinicalExtensionId {
+            clinical_extension {
               name
             }
-            clinical_stage: neoplasmsClinicalstageByclinicalStageId {
+            clinical_stage {
               name
             }
-            source: neoplasmsSourceBysourceId {
+            source {
               name
             }
             date_of_report
-            medic_that_report: employeesEmployeesBymedicThatReportId {
+            medic_that_report {
               first_name
               last_name
             }

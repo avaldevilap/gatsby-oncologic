@@ -1,22 +1,23 @@
-import ApolloClient, { Operation } from 'apollo-boost';
-import es from 'date-fns/locale/es';
-import { Form, Formik, FormikActions } from 'formik';
-import { MuiPickersUtilsProvider } from 'material-ui-pickers';
-import * as React from 'react';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import ApolloClient, { Operation } from "apollo-boost";
+import es from "date-fns/locale/es";
+import { Form, Formik, FormikActions } from "formik";
+import { MuiPickersUtilsProvider } from "material-ui-pickers";
+import * as React from "react";
+import { ApolloProvider } from "react-apollo";
+import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
 
-import DateFnsUtils from '@date-io/date-fns';
-import { storiesOf } from '@storybook/react';
+import DateFnsUtils from "@date-io/date-fns";
+import { storiesOf } from "@storybook/react";
 
-import FilterForm from '../src/components/FilterForm';
-import ClinicalStageSelect from '../src/components/UI/ClinicalStageSelect';
-import MorphologySelect from '../src/components/UI/MorphologySelect';
-import TopographySelect from '../src/components/UI/TopographySelect';
+import FilterForm from "../src/components/FilterForm";
+import ClinicalStageSelect from "../src/components/UI/ClinicalStageSelect";
+import MorphologySelect from "../src/components/UI/MorphologySelect";
+import TopographySelect from "../src/components/UI/TopographySelect";
+import BMI from "../src/components/UI/BMI";
 
 const client = new ApolloClient({
   uri: `http://localhost:8080/v1alpha1/graphql`,
-  request: (operation:Operation) =>
+  request: (operation: Operation) =>
     operation.setContext({
       headers: { "X-Hasura-Access-Key": "YRz84zdxgEiSRnJ" }
     })
@@ -83,3 +84,5 @@ stories.add("react-select-material-ui", () => (
     </Form>
   </Formik>
 ));
+
+stories.add("BMI", () => <BMI stature={1.56} weight={62} />);
