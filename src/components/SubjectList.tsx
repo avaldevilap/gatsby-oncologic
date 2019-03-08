@@ -27,7 +27,7 @@ function SubjectList(props: SubjectListProps & RouteComponentProps) {
 
   const { search } = queryString.parse(props.location.search);
 
-  const { data, error, loading } = useQuery(
+  const { data, error, loading } = useQuery<queryData>(
     gql`
       query allSubjectsQuery($value: String) {
         subjects: subjects_subject_aggregate(
@@ -58,7 +58,7 @@ function SubjectList(props: SubjectListProps & RouteComponentProps) {
     }
   );
 
-  const { subjects }: queryData = data;
+  const { subjects } = data;
 
   if (error) {
     return `Error! ${error.message}`;
